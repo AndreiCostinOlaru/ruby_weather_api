@@ -1,24 +1,30 @@
-# README
+# Weather API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Ruby on Rails API for weather data.
 
-Things you may want to cover:
+## Ruby Version
 
-* Ruby version
+Ruby 3.4.4
 
-* System dependencies
+## Setup
 
-* Configuration
+```bash
+bundle install
+bin/rails db:setup
+```
 
-* Database creation
+## Running the Server
 
-* Database initialization
+```bash
+bin/rails server
+```
 
-* How to run the test suite
+API will be available at `http://localhost:3000`
 
-* Services (job queues, cache servers, search engines, etc.)
+## Response Format
 
-* Deployment instructions
+All responses are in JSON format.
 
-* ...
+## Deployment
+
+This project is configured for deployment with Kamal. See `config/deploy.yml` for configuration.
