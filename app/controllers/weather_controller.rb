@@ -25,13 +25,15 @@ class WeatherController < ApplicationController
       render json: {
         location: city,
         forecast: (0..6).map do |i|
+          condition = weather_code_to_condition(daily_data["weather_code"][i])
           {
             day: Date.parse(daily_data["time"][i]).strftime("%A"),
             temperature: {
               high: daily_data["temperature_2m_max"][i].round,
               low: daily_data["temperature_2m_min"][i].round
             },
-            condition: weather_code_to_condition(daily_data["weather_code"][i])
+            condition: condition,
+            icon: "#{request.base_url}/icons/weather/#{condition_to_icon(condition)}"
           }
         end
       }
@@ -68,6 +70,18 @@ class WeatherController < ApplicationController
     when 80, 81, 82 then "Showers"
     when 95, 96, 99 then "Thunderstorm"
     else "Unknown"
+    end
+  end
+
+  def condition_to_icon(condition)
+    case condition
+    when "Clear" then "clear.svg"
+    when "Partly Cloudy" then "partly-cloudy.svg"
+    when "Foggy" then "foggy.svg"
+    when "Rainy", "Showers" then "rainy.svg"
+    when "Snowy" then "snowy.svg"
+    when "Thunderstorm" then "thunderstorm.svg"
+    else "clear.svg"
     end
   end
 
