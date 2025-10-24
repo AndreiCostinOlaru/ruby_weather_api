@@ -103,4 +103,22 @@ class WeatherController < ApplicationController
       ]
     }
   end
+
+  def city_video
+    city = params[:city]
+    return render json: { error: "City parameter is required" }, status: 400 unless city
+
+    video_filename = city.downcase.gsub(" ", "-")
+    video_path = Rails.root.join("public", "videos", "cities", "#{video_filename}.mp4")
+
+    if File.exist?(video_path)
+      render json: {
+        city: city,
+        video_url: "#{request.base_url}/videos/cities/#{video_filename}.mp4",
+        description: "City highlight video for #{city}"
+      }
+    else
+      render json: { error: "Video not found for this city" }, status: 404
+    end
+  end
 end

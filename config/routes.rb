@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # Weather API routes
   get "weather/weekly/:city", to: "weather#weekly_forecast"
   get "weather/cities", to: "weather#cities"
+  get "weather/video/:city", to: "weather#city_video"
 
   # Defines the root path route ("/")
   # root "posts#index"
