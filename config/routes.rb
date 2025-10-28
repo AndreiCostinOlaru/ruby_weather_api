@@ -10,6 +10,11 @@ Rails.application.routes.draw do
   get "weather/cities", to: "weather#cities"
   get "weather/video/:city", to: "weather#city_video"
 
+  # Favorites routes
+  get "favorites", to: "favorites#index"
+  post "favorites", to: "favorites#create"
+  delete "favorites/:city", to: "favorites#destroy"
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
