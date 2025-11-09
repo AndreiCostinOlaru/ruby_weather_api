@@ -45,20 +45,41 @@ class WeatherController < ApplicationController
   private
 
   def get_city_coordinates(city)
-    city_coords = {
-      "New York" => { lat: 40.7128, lng: -74.0060 },
-      "Los Angeles" => { lat: 34.0522, lng: -118.2437 },
-      "Chicago" => { lat: 41.8781, lng: -87.6298 },
-      "Houston" => { lat: 29.7604, lng: -95.3698 },
-      "Phoenix" => { lat: 33.4484, lng: -112.0740 },
-      "Philadelphia" => { lat: 39.9526, lng: -75.1652 },
-      "San Antonio" => { lat: 29.4241, lng: -98.4936 },
-      "San Diego" => { lat: 32.7157, lng: -117.1611 },
-      "Dallas" => { lat: 32.7767, lng: -96.7970 },
-      "San Jose" => { lat: 37.3382, lng: -121.8863 }
-    }
-    city_coords[city]
+    CITY_COORDINATES[city]
   end
+
+  CITY_COORDINATES = {
+    "New York" => { lat: 40.7128, lng: -74.0060 },
+    "Los Angeles" => { lat: 34.0522, lng: -118.2437 },
+    "Chicago" => { lat: 41.8781, lng: -87.6298 },
+    "Houston" => { lat: 29.7604, lng: -95.3698 },
+    "Phoenix" => { lat: 33.4484, lng: -112.0740 },
+    "Philadelphia" => { lat: 39.9526, lng: -75.1652 },
+    "San Antonio" => { lat: 29.4241, lng: -98.4936 },
+    "San Diego" => { lat: 32.7157, lng: -117.1611 },
+    "Dallas" => { lat: 32.7767, lng: -96.7970 },
+    "San Jose" => { lat: 37.3382, lng: -121.8863 },
+    "Austin" => { lat: 30.2672, lng: -97.7431 },
+    "Jacksonville" => { lat: 30.3322, lng: -81.6557 },
+    "Fort Worth" => { lat: 32.7555, lng: -97.3308 },
+    "Columbus" => { lat: 39.9612, lng: -82.9988 },
+    "Charlotte" => { lat: 35.2271, lng: -80.8431 },
+    "San Francisco" => { lat: 37.7749, lng: -122.4194 },
+    "Indianapolis" => { lat: 39.7684, lng: -86.1581 },
+    "Seattle" => { lat: 47.6062, lng: -122.3321 },
+    "Denver" => { lat: 39.7392, lng: -104.9903 },
+    "Boston" => { lat: 42.3601, lng: -71.0589 },
+    "Nashville" => { lat: 36.1627, lng: -86.7816 },
+    "Detroit" => { lat: 42.3314, lng: -83.0458 },
+    "Portland" => { lat: 45.5152, lng: -122.6784 },
+    "Las Vegas" => { lat: 36.1699, lng: -115.1398 },
+    "Miami" => { lat: 25.7617, lng: -80.1918 },
+    "Atlanta" => { lat: 33.7490, lng: -84.3880 },
+    "Orlando" => { lat: 28.5383, lng: -81.3792 },
+    "Minneapolis" => { lat: 44.9778, lng: -93.2650 },
+    "Tampa" => { lat: 27.9506, lng: -82.4572 },
+    "St. Louis" => { lat: 38.6270, lng: -90.1994 }
+  }.freeze
 
   def weather_code_to_condition(code)
     case code
@@ -88,20 +109,14 @@ class WeatherController < ApplicationController
   public
 
   def cities
-    render json: {
-      cities: [
-        "New York",
-        "Los Angeles",
-        "Chicago",
-        "Houston",
-        "Phoenix",
-        "Philadelphia",
-        "San Antonio",
-        "San Diego",
-        "Dallas",
-        "San Jose"
-      ]
-    }
+    search = params[:search]
+    city_list = CITY_COORDINATES.keys
+
+    if search.present?
+      city_list = city_list.select { |city| city.downcase.include?(search.downcase) }
+    end
+
+    render json: { cities: city_list.sort }
   end
 
   def city_video
