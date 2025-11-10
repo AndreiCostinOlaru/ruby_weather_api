@@ -96,13 +96,13 @@ class WeatherController < ApplicationController
 
   def condition_to_icon(condition)
     case condition
-    when "Clear" then "clear.svg"
-    when "Partly Cloudy" then "partly-cloudy.svg"
-    when "Foggy" then "foggy.svg"
-    when "Rainy", "Showers" then "rainy.svg"
-    when "Snowy" then "snowy.svg"
-    when "Thunderstorm" then "thunderstorm.svg"
-    else "clear.svg"
+    when "Clear" then "clear.png"
+    when "Partly Cloudy" then "partly-cloudy.png"
+    when "Foggy" then "foggy.png"
+    when "Rainy", "Showers" then "rainy.png"
+    when "Snowy" then "snowy.png"
+    when "Thunderstorm" then "thunderstorm.png"
+    else "clear.png"
     end
   end
 
